@@ -1,7 +1,14 @@
+
 .App {
   text-align: center;
 }
 
+.black-nav {
+  background: black;
+  color: white;
+  height: 50px;
+  line-height: 50px;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
