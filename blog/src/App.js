@@ -11,19 +11,9 @@ function App() {
     '아기 코트 추천',
   ])
 
-  let [따봉, 따봉변경] = useState(0)
-
-  let clickLike = function () {
-    따봉변경(따봉 + 1)
-  }
+  let [따봉, 따봉변경] = useState([0, 0, 0])
 
   let [postNum, postChange] = useState(0)
-
-  let ChangePostNum = function () {
-    let copy = [...글제목]
-    copy[0] = '여자 코트 추천'
-    글제목변경(copy)
-  }
 
   let [modal, setModal] = useState(false)
 
@@ -32,34 +22,48 @@ function App() {
       <div className="black-nav">
         <h4>ReactBlog</h4>
       </div>
-      <div className="list">
-        <h4>
-          {글제목[postNum]} <span onClick={clickLike}>💘</span> {따봉}{' '}
-        </h4>
-        <p>5월 발행</p>
-      </div>
-      <hr />
-      <div className="list">
-        <h4>{글제목[1]}</h4>
-        <p>5월 발행</p>
-      </div>
-      <hr />
-      <div className="list">
-        <h4 onClick={() => {modal == true ? setModal(false) : setModal(true)}}>{글제목[2]}</h4>
-        <p>5월 발행</p>
-      </div>
-      <button onClick={ChangePostNum}>변경</button>
-      
-      {
-        modal == true ? <Modal/> : null
-      }
-      
+      <button
+        onClick={() => {
+          let copy = [...글제목]
+          copy[0] = '여자 코트 추천'
+          글제목변경(copy)
+        }}
+      >
+        변경
+      </button>
 
+      {/* 게시글 만드는 반복문 */}
+      {글제목.map(function (a, i) {
+        return (
+          <div className="list" key={i}>
+            <h4
+              onClick={() => {
+                modal == true ? setModal(false) : setModal(true)
+              }}
+            >
+              {a}{' '}
+              <span
+                onClick={() => {
+                  따봉변경(따봉[i] + 1)
+                }}
+              >
+                💘
+              </span>{' '}
+              {따봉[i]}{' '}
+            </h4>
+            <p>5월 발행</p>
+            <hr />
+          </div>
+        )
+      })}
+      {/* state modal의 값이 true일 때 모달창 띄우기 */}
+      {modal == true ? <Modal /> : null}
     </div>
   )
 }
 
-//modal == true ? setModal(false) : setModal(true)}
+// Modal 컴포넌트
+
 function Modal() {
   return (
     <div className="modal">
@@ -83,7 +87,6 @@ export default App
 //- state를 작명할 때에는 let [state, setState] = useState(); 로 작명하는 것이 일반적이다.
 
 //~ state를 세팅할 때 필요한 state 변경 함수는 set~ 으로 작명하는 것이 관습이다.
-
 
 //* 컴포넌트
 
@@ -113,7 +116,6 @@ export default App
 // 즉 다른 함수에 있는 state, 혹은 변수를 타 컴포넌트에서 사용할 수는 없다는 것이다.
 // 그렇기 때문에 아무거나 컴포넌트로 만들면 안 되고, 곧 배울 props라는 문법을 이용해
 // state를 다른 컴포넌트까지 전해 줘야 비로소 사용이 가능하다. 꼭 필요한 것만 컴포넌트로 만들자.
-
 
 //* 동적인 UI 만들기
 
@@ -151,6 +153,5 @@ export default App
 // 느낌표(!)를 붙이면 느낌표의 우측 자료를 반대로 바꿔준다는 것을 알고는 있었지만, 여기서는 써먹을 생각을 전혀 못했다.
 // 그러니까 이 코드는, 클릭했을 때 state 설정 함수를 통해 현재 modal 상태의 반대(true이면 false, false이면 true) 상태로
 // 바꾸어 달라는 이야기였다.
-
 
 //* map
