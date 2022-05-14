@@ -59,19 +59,24 @@ function App() {
         )
       })}
       {/* state modal의 값이 true일 때 모달창 띄우기 */}
-      {modal == true ? <Modal /> : null}
+      {modal == true ? <Modal 글제목={글제목}/> : null}
     </div>
   )
 }
 
 // Modal 컴포넌트
 
-function Modal() {
+function Modal(props) {
   return (
-    <div className="modal">
-      <h4>제목</h4>
+    <div className="modal" style={{background : props.color}}>
+      <h4>{props.글제목[0]}</h4>
       <p>날짜</p>
       <p>상세 내용</p>
+      <button onClick={() => {
+        let copy = [...글제목]
+        copy[0] = '여자 코트 추천'
+        글제목변경(copy)
+      }}>글 수정</button>
     </div>
   )
 }
@@ -213,4 +218,25 @@ export default App
 
 //* props
 
-//# 
+//# Modal 컴포넌트에 글제목 state가 필요하면?
+// 부모 컴포넌트인 App, 그 안에 있는 자식 컴포넌트인 Modal 컴포넌트에서 props 문법을 사용하면 가능하다.
+// 무조건 부모 => 자식으로만 전송해 줄 수 있으며, 자식 => 부모(패륜전송), 자식 => 자식(불륜전송)은 안 된다.
+
+//& props로 부모에서 자식으로 state를 전송할 수 있는 2 Step
+// 자식 컴포넌트를 사용하는 곳으로 가서 <자식컴포넌트명 작명={state이름}/>으로 바꿔 준다.
+// 자식 컴포넌트에서 props라는 인자를 넣은 후에 return에서 props.작명 식으로 사용해 주면 된다.
+// 여기서 작명은 아무렇게나 해도 상관 없으나, state 이름과 똑같이 작명하는 경우가 대부분이다.
+
+//@ 꼭 state만 전송할 수 있나?
+// props는 10개, 100개, 1000개 무한히 전송이 가능하다. 물론 state가 아닌
+// 함수, 변수, String 등 많은 것들을 전송할 수 있다.
+// 문자열을 전송할 때에는 중괄호 없이 <컴포넌트명 전달체명="문자열"> 로 작성할 수 있다.
+
+//- 저는 모달창 색깔을 여러가지로 만들고 싶은데요?
+// 컴포넌트를 따로 만들어도 되지만, 내용은 같은데 배경색만 다르다면 굳이 같은 컴포넌트를 만들 필요가 없다.
+// 인자로 props를 준 자식 컴포넌트에서 모달창에 여러 가지 색깔을 넣고 싶다면,
+// 부모 컴포넌트에서 자식 컴포넌트로 전송할 때에 어차피 orange, pink 등 색깔은 문자열이기 때문에
+//- <Modal color="orange"/>
+// 처럼 전송해도 되고,
+//- <Modal color={"orange"}/>
+// 처럼 전송해도 된다.
