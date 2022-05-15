@@ -59,7 +59,7 @@ function App() {
         )
       })}
       {/* state modal의 값이 true일 때 모달창 띄우기 */}
-      {modal == true ? <Modal 글제목={글제목}/> : null}
+      {modal == true ? <Modal 글제목변경={글제목변경} 글제목={글제목}/> : null}
     </div>
   )
 }
@@ -73,9 +73,9 @@ function Modal(props) {
       <p>날짜</p>
       <p>상세 내용</p>
       <button onClick={() => {
-        let copy = [...글제목]
+        let copy = [...props.글제목]
         copy[0] = '여자 코트 추천'
-        글제목변경(copy)
+        props.글제목변경(copy)
       }}>글 수정</button>
     </div>
   )
@@ -224,7 +224,7 @@ export default App
 
 //& props로 부모에서 자식으로 state를 전송할 수 있는 2 Step
 // 자식 컴포넌트를 사용하는 곳으로 가서 <자식컴포넌트명 작명={state이름}/>으로 바꿔 준다.
-// 자식 컴포넌트에서 props라는 인자를 넣은 후에 return에서 props.작명 식으로 사용해 주면 된다.
+// 자식 컴포넌트에서 props라는 인자를 넣은 후에 return에서 props.작명 식으로 사용해 주면   된다.
 // 여기서 작명은 아무렇게나 해도 상관 없으나, state 이름과 똑같이 작명하는 경우가 대부분이다.
 
 //@ 꼭 state만 전송할 수 있나?
