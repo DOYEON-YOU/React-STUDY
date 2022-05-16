@@ -17,6 +17,8 @@ function App() {
 
   let [modal, setModal] = useState(false)
 
+  let [title, setTitle] = useState(0);
+
   return (
     <div className="App">
       <div className="black-nav">
@@ -38,15 +40,16 @@ function App() {
           <div className="list" key={i}>
             <h4
               onClick={() => {
-                modal == true ? setModal(false) : setModal(true)
+                setModal(!modal)
+                setTitle(i)
               }}
             >
               {a}{' '}
               <span
                 onClick={() => {
-                  let copy = [...따봉];
-                  copy[i] += 1;
-                  따봉변경(copy);
+                  let copy = [...따봉]
+                  copy[i] += 1
+                  따봉변경(copy)
                 }}
               >
                 💘
@@ -58,8 +61,9 @@ function App() {
           </div>
         )
       })}
+
       {/* state modal의 값이 true일 때 모달창 띄우기 */}
-      {modal == true ? <Modal 글제목변경={글제목변경} 글제목={글제목}/> : null}
+      {modal == true ? <Modal title={title} 글제목변경={글제목변경} 글제목={글제목} /> : null}
     </div>
   )
 }
@@ -68,15 +72,11 @@ function App() {
 
 function Modal(props) {
   return (
-    <div className="modal" style={{background : props.color}}>
-      <h4>{props.글제목[0]}</h4>
+    <div className="modal" style={{ background: props.color }}>
+      <h4>{props.글제목[props.title]}</h4>
       <p>날짜</p>
       <p>상세 내용</p>
-      <button onClick={() => {
-        let copy = [...props.글제목]
-        copy[0] = '여자 코트 추천'
-        props.글제목변경(copy)
-      }}>글 수정</button>
+      <button>글 수정</button>
     </div>
   )
 }
@@ -202,7 +202,7 @@ export default App
 //~ for문을 쓰고 싶어요
 // 자바스크립트를 했으니 친숙한 for문이 쓰고 싶다.
 
-// 그렇다면 html을 담아둘 array 자료를 하나 만들어준 후, 
+// 그렇다면 html을 담아둘 array 자료를 하나 만들어준 후,
 //~ (let arr=[];)
 // 일반 for문을 통해서 arr에 html을 넣어주는 반복문을 돌린다.
 //~ for(let i = 0; i < 9; i++){
