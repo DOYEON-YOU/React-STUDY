@@ -18,6 +18,8 @@ function App() {
   let [modal, setModal] = useState(false);
 
   let [title, setTitle] = useState(0);
+
+  let [입력값, 입력값변경] = useState('');
   return (
     <div className='App'>
       <div className='black-nav'>
@@ -42,14 +44,26 @@ function App() {
               }}>
               {a}{' '}
               <span
-                onClick={() => {
+                onClick={e => {
                   let copy = [...따봉];
                   copy[i] += 1;
                   따봉변경(copy);
+                  e.stopPropagation();
                 }}>
                 💘
               </span>{' '}
               {따봉[i]}{' '}
+              <button
+                style={{ backgroundColor: 'black', color: 'white' }}
+                onClick={e => {
+                  let copy=[...글제목]
+                  copy.splice(i, 1);
+                  글제목변경(copy)
+                  e.stopPropagation();
+                  따봉.pop();
+                }}>
+                삭제
+              </button>
             </h4>
             <p>5월 발행</p>
             <hr />
@@ -57,7 +71,22 @@ function App() {
         );
       })}
 
-      <input type="text" onChange={(e) => {console.log(e.target.value)}}/>
+      <input
+        type='text'
+        onChange={e => {
+          입력값변경(e.target.value);
+        }}
+      />
+      <button
+        onClick={() => {
+          let copy = [...글제목];
+          copy.push(입력값);
+          글제목변경(copy);
+          따봉.push(0);
+        }}
+        style={{ backgroundColor: 'black', color: 'white' }}>
+        발행
+      </button>
 
       {/* state modal의 값이 true일 때 모달창 띄우기 */}
       {modal == true ? (
