@@ -1,57 +1,52 @@
 /* eslint-disable */
 //@ 이거 적어주면 터미널 창에 never used 어쩌고 저쩌고 하는 오류 안 뜸.
 
-import './App.css'
-import { useState } from 'react'
+import './App.css';
+import { useState } from 'react';
 
 function App() {
   let [글제목, 글제목변경] = useState([
     '남자 코트 추천',
     '여자 코트 추천',
     '아기 코트 추천',
-  ])
+  ]);
 
-  let [따봉, 따봉변경] = useState([0, 0, 0])
+  let [따봉, 따봉변경] = useState([0, 0, 0]);
 
-  let [postNum, postChange] = useState(0)
+  let [postNum, postChange] = useState(0);
 
-  let [modal, setModal] = useState(false)
+  let [modal, setModal] = useState(false);
 
   let [title, setTitle] = useState(0);
-
   return (
-    <div className="App">
-      <div className="black-nav">
+    <div className='App'>
+      <div className='black-nav'>
         <h4>ReactBlog</h4>
       </div>
       <button
         onClick={() => {
-          let copy = [...글제목]
-          copy[0] = '여자 코트 추천'
-          글제목변경(copy)
-        }}
-      >
+          let copy = [...글제목];
+          copy[0] = '여자 코트 추천';
+          글제목변경(copy);
+        }}>
         변경
       </button>
-
       {/* 게시글 만드는 반복문 */}
       {글제목.map(function (a, i) {
         return (
-          <div className="list" key={i}>
+          <div className='list' key={i}>
             <h4
               onClick={() => {
-                setModal(!modal)
-                setTitle(i)
-              }}
-            >
+                setModal(!modal);
+                setTitle(i);
+              }}>
               {a}{' '}
               <span
                 onClick={() => {
-                  let copy = [...따봉]
-                  copy[i] += 1
-                  따봉변경(copy)
-                }}
-              >
+                  let copy = [...따봉];
+                  copy[i] += 1;
+                  따봉변경(copy);
+                }}>
                 💘
               </span>{' '}
               {따봉[i]}{' '}
@@ -59,29 +54,33 @@ function App() {
             <p>5월 발행</p>
             <hr />
           </div>
-        )
+        );
       })}
 
+      <input type="text" onChange={(e) => {console.log(e.target.value)}}/>
+
       {/* state modal의 값이 true일 때 모달창 띄우기 */}
-      {modal == true ? <Modal title={title} 글제목변경={글제목변경} 글제목={글제목} /> : null}
+      {modal == true ? (
+        <Modal title={title} 글제목변경={글제목변경} 글제목={글제목} />
+      ) : null}
     </div>
-  )
+  );
 }
 
 // Modal 컴포넌트
 
 function Modal(props) {
   return (
-    <div className="modal" style={{ background: props.color }}>
+    <div className='modal' style={{ background: props.color }}>
       <h4>{props.글제목[props.title]}</h4>
       <p>날짜</p>
       <p>상세 내용</p>
       <button>글 수정</button>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
 
 //* State
 
